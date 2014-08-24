@@ -28,11 +28,16 @@ shinyServer(function(input, output, session) {
       filter(
         as.Date(start_dt) >= start_date,
         as.Date(end_dt) <= end_date,
-        num_stars >= stars,
-        repository_forks_max >= forks,
-        repository_watchers >= watchers,
-        repository_open_issues_max >= issues,
-        repository_size_max >= size
+        num_stars >= stars[1],
+        num_stars <= stars[2],
+        repository_forks_max >= forks[1],
+        repository_forks_max <= forks[2],
+        repository_watchers >= watchers[1],
+        repository_watchers <= watchers[2],
+        repository_open_issues_max >= issues[1],
+        repository_open_issues_max <= issues[2],
+        repository_size_max >= size[1],
+        repository_size_max <= size[2]
       ) %>%
       arrange(repository_forks_max)
 
