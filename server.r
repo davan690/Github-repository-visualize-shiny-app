@@ -1,7 +1,7 @@
 library(ggvis)
 library(dplyr)
 
-repos  <- read.csv('/Users/Vikas/Downloads/results-r-all.csv',
+repos  <- read.csv('./results-r-all.csv',
                   colClasses=c("POSIXct","POSIXct","character",
                                "integer","integer","integer",
                                "character","character","logical",
