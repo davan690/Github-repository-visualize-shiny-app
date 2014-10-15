@@ -15,17 +15,17 @@ shinyUI(fluidPage(
       wellPanel(
         h4("Filter"),
         sliderInput("Stars", "Number of starts received",
-                    0, 1600, value= c(80, 1000)),
+                    0, 1600, value= c(0, 1000)),
         dateRangeInput("Date", "Date range:",
                     start = "2012-01-01"),
         sliderInput("Forks", "Number of Forks",
-                    0, 1000, value=c(1,400)),
+                    0, 1000, value=c(0,400)),
         sliderInput("Watchers", "Number of Watchers",
-                    0, 1000, value=c(1,400)),
+                    0, 1000, value=c(0,400)),
         sliderInput("Issues", "Number of open issues",
-                    0, 300, value=c(1,300)),
+                    0, 300, value=c(0,300)),
         sliderInput("Size", "Size of repository",
-                    0, 1500000, value=c(1,1500000)),
+                    0, 1500000, value=c(0,1500000)),
         textInput("keyword", "Description contains (e.g., Coursera)")
       ),
       wellPanel(
