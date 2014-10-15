@@ -1,12 +1,38 @@
 library(ggvis)
 library(dplyr)
+library(bigrquery)
 
-repos  <- read.csv('./results-r-all.csv',
-                  colClasses=c("POSIXct","POSIXct","character",
-                               "integer","integer","integer",
-                               "character","character","logical",
-                               "logical","logical","integer",
-                               "integer","POSIXct"))
+project <- "micro-spanner-733" # put your projectID here
+
+sql <- paste0("SELECT MIN(created_at) as start_dt, ",
+              "MAX(created_at) as end_dt, ",
+              "repository_url, COUNT(repository_url) as num_stars, ",
+              "MAX(repository_forks) as repository_forks_max, ",
+              "MAX(repository_watchers) as repository_watchers, ",
+              "repository_description, repository_name, ",
+              "repository_has_wiki, ",
+              "repository_has_issues, ",
+              "repository_fork, ",
+              "max(repository_open_issues) as repository_open_issues_max, ",
+              "max(repository_size) as repository_size_max, ",
+              "repository_created_at ",
+              "from githubarchive:github.timeline ",
+              "where repository_language = 'R' and ",
+              "type = 'WatchEvent'  ",
+              "GROUP BY repository_url, ",
+              "repository_description,  ",
+              "repository_name,  ",
+              "repository_created_at, ",
+              "repository_has_wiki, ",
+              "repository_has_issues, ",
+              "repository_fork;")
+
+repos <- query_exec(sql, project = project, default_dataset = "githubarchive:github")
+repos$start_dt = as.POSIXct(repos$start_dt)
+repos$end_dt = as.POSIXct(repos$end_dt)
+repos$repository_created_at = as.POSIXct(repos$repository_created_at)
+repos$repository_fork = as.logical(repos$repository_fork)
+
 
 all_repos  <- tbl_df(repos)
 
@@ -43,8 +69,8 @@ shinyServer(function(input, output, session) {
 
      # Optional: filter by description keyword
      if (!is.null(input$keyword) && input$keyword != "") {
-       keyword <- paste0("%", input$keyword, "%")
-       m <- m %>% filter(repository_description %like% keyword)
+       m <- m %>% 
+         filter(grepl(keyword, repository_description))
      }
     
     m <- as.data.frame(m)
@@ -66,7 +92,7 @@ shinyServer(function(input, output, session) {
     all_repos <- isolate(repos())
     repo <- all_repos[all_repos$repository_url == x$repository_url, ]
 
-    paste0("<b>", repo$repository_name, "</b><br>",
+    paste0("<b>", repo$repository_url, "</b><br>",
        "Created: ", as.Date(repo$repository_created_at), "<br>",
        "Stars:", format(repo$num_stars, big.mark = ",", scientific = FALSE)
     )

@@ -9,13 +9,13 @@ actionLink <- function(inputId, ...) {
 }
 
 shinyUI(fluidPage(
-  titlePanel("Repositories explorer"),
+  titlePanel("R - Repository Browser"),
   fluidRow(
     column(3,
       wellPanel(
         h4("Filter"),
         sliderInput("Stars", "Number of starts received",
-                    10, 1500, value= c(80, 1000)),
+                    0, 1600, value= c(80, 1000)),
         dateRangeInput("Date", "Date range:",
                     start = "2012-01-01"),
         sliderInput("Forks", "Number of Forks",
