@@ -1,5 +1,4 @@
-This app is to browse user’s public repositories in R Language. 
-
+This shiny app is to visualize public repositories in R Language based on a lot of parameters. 
 
 The app can be accessed from here - http://goo.gl/dIQ7nE
 
