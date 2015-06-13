@@ -1,11 +1,13 @@
+### Repository Visualiser
 This shiny app is to visualize public repositories in R Language based on a lot of parameters. 
 
+### Link
 The app can be accessed from here - http://goo.gl/dIQ7nE
 
 
 The metadata about the repositories is available via [Google BigQuery](https://developers.google.com/bigquery/) as part of [githubarchive](http://www.githubarchive.org/) project
 
-
+### Bigquery
 Following query was used to download the data corresponding to all the R user repositories – 
 
 ```sql
@@ -35,3 +37,7 @@ repository_fork;
 User can vary different inputs to select the subset of the data they want to browse. 
 
 
+### Screenshot
+
+
+![](Screenshot.png)
