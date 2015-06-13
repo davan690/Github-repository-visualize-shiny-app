@@ -1,9 +1,15 @@
-This app is to browse user’s public repositories in R Language. The metadata about the repositories is available via [Google BigQuery](https://developers.google.com/bigquery/) as part of [githubarchive](http://www.githubarchive.org/) project
+This app is to browse user’s public repositories in R Language. 
+
+
+The app can be accessed from here - http://goo.gl/dIQ7nE
+
+
+The metadata about the repositories is available via [Google BigQuery](https://developers.google.com/bigquery/) as part of [githubarchive](http://www.githubarchive.org/) project
 
 
 Following query was used to download the data corresponding to all the R user repositories – 
 
-```
+```sql
 SELECT MIN(created_at) as start_dt,
 MAX(created_at) as end_dt,
 repository_url, COUNT(repository_url) as num_stars,
